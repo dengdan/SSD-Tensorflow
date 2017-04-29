@@ -64,7 +64,7 @@ DIRECTORY_IMAGES = 'JPEGImages/'
 
 # TFRecords convertion parameters.
 RANDOM_SEED = 4242
-SAMPLES_PER_FILES = 200
+SAMPLES_PER_FILES = 2000
 
 
 def _process_image(directory, name):
@@ -224,3 +224,16 @@ def run(dataset_dir, output_dir, name='voc_train', shuffling=False):
     # labels_to_class_names = dict(zip(range(len(_CLASS_NAMES)), _CLASS_NAMES))
     # dataset_utils.write_label_file(labels_to_class_names, dataset_dir)
     print('\nFinished converting the Pascal VOC dataset!')
+    
+if __name__ == "__main__":
+    import util
+    output_dir = util.io.get_absolute_path('~/dataset_nfs/SSD-tf/pascal-voc/')
+    util.io.mkdir(output_dir)
+    voc_2007_trainval_dir = util.io.get_absolute_path('~/dataset_nfs/pascal-voc/voc2007trainval/VOCdevkit/VOC2007/')
+    voc_2012_trainval_dir = util.io.get_absolute_path('~/dataset_nfs/pascal-voc/VOCdevkit/VOC2012/')
+
+    voc_2007_test_dir = util.io.get_absolute_path('~/dataset_nfs/pascal-voc/voc2007test/VOCdevkit/VOC2007/')
+        
+    run(dataset_dir = voc_2007_trainval_dir, output_dir = output_dir, name='voc2007trainval', shuffling=True)
+    run(dataset_dir = voc_2012_trainval_dir, output_dir = output_dir, name='voc2012trainval', shuffling=True)
+#    run(dataset_dir = voc_2007_test_dir, output_dir = output_dir, name='voc2007test', shuffling=False)
